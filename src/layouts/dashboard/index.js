@@ -13,6 +13,9 @@ Coded by www.creative-tim.com
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 
+import { useEffect } from "react"; // Pastikan useEffect diimpor
+import { useNavigate } from "react-router-dom"; // <-- Impor useNavigate
+
 // @mui material components
 import Grid from "@mui/material/Grid";
 
@@ -37,6 +40,19 @@ import OrdersOverview from "layouts/dashboard/components/OrdersOverview";
 
 function Dashboard() {
   const { sales, tasks } = reportsLineChartData;
+  const navigate = useNavigate(); // <-- Inisialisasi useNavigate
+
+  useEffect(() => {
+    // Periksa token di localStorage saat komponen dimuat
+    const authToken = localStorage.getItem("authToken");
+    const isLoggedIn = localStorage.getItem("isLoggedIn");
+
+    // Jika tidak ada authToken atau isLoggedIn bukan 'true'
+    if (!authToken || isLoggedIn !== "true") {
+      // Alihkan pengguna ke halaman sign-in
+      navigate("/authentication/sign-in");
+    }
+  }, [navigate]); // navigate ditambahkan sebagai dependency untuk useEffect
 
   return (
     <DashboardLayout>

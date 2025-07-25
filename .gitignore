@@ -2,26 +2,36 @@
 
 # dependencies
 /node_modules
-.DS_Store
 
 # testing
 /coverage
 
-# production
-/build
+# build outputs
+/build           # Jika Anda punya folder 'build' custom selain 'dist'
+/dist            # Output default Vite
+
+# environment variables
+.env
+.env.*local      # Ini adalah shorthand untuk semua .env.local, .env.development.local, dll.
+
+# logs
+*.log            # Mengabaikan semua file log (misal npm-debug.log)
 
 # misc
-.DS_Store
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
+.DS_Store        # Untuk macOS
+npm-debug.log* # Lebih spesifik untuk npm debug logs
+yarn-debug.log* # Jika Anda beralih ke Yarn di masa depan
+yarn-error.log* # Jika Anda beralih ke Yarn di masa depan
 
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
+# package manager-specific lock files
+package-lock.json # Jika Anda menggunakan npm
+# yarn.lock       # Komentari ini jika Anda pakai npm, aktifkan jika pakai yarn
 
-package-lock.json
-yarn.lock
+# local IDE files
+.idea/           # Untuk IntelliJ/WebStorm
+.vscode/         # Untuk VS Code (jika Anda tidak ingin membagikan config workspace)
+*.sublime-project
+*.sublime-workspace
 
+# custom scripts (only if you don't want them tracked in git)
 commit.sh
