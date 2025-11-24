@@ -72,6 +72,7 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
     localStorage.removeItem("userRole");
     localStorage.removeItem("userId");
     localStorage.removeItem("isLoggedIn"); // Pastikan ini juga dihapus saat logout
+    localStorage.removeItem("nama");
     setIsLoggedIn(false); // Perbarui state login
     navigate("/authentication/sign-in"); // Arahkan ke halaman login
   };

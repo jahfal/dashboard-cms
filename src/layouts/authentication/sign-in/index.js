@@ -75,20 +75,21 @@ function Basic() {
         body: JSON.stringify({ email, password }),
       });
 
-      const data = await response.json();
-
       if (response.ok) {
-        // Login berhasil
+        const data = await response.json();
+        // ... (Kode Anda untuk login berhasil)
         localStorage.setItem("authToken", data.token);
 
         const decodedToken = jwtDecode(data.token);
         const userRole = decodedToken.role;
         const userId = decodedToken.id_pengguna;
+        const nama = decodedToken.nama;
 
         if (userRole && userId) {
           localStorage.setItem("userRole", userRole);
           localStorage.setItem("userId", userId);
-          localStorage.setItem("isLoggedIn", "true"); // <--- INI PENTING! Tambahkan baris ini
+          localStorage.setItem("nama", nama);
+          localStorage.setItem("isLoggedIn", "true");
 
           openSuccessSB();
           setTimeout(() => {
@@ -99,8 +100,14 @@ function Basic() {
           openErrorSB();
         }
       } else {
-        // Login gagal (misal: email/password salah)
-        setError(data.message || "Email atau password salah.");
+        // Tangani respons 4xx dan 5xx
+        // Coba parse respons sebagai JSON, tetapi tangani jika gagal
+        try {
+          const data = await response.json();
+          setError(data.message || "Email atau password salah.");
+        } catch (e) {
+          setError(`Terjadi kesalahan server: Status ${response.status}.`);
+        }
         openErrorSB();
       }
     } catch (err) {

@@ -13,11 +13,12 @@ Coded by www.creative-tim.com
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 
-import { useEffect } from "react"; // Pastikan useEffect diimpor
-import { useNavigate } from "react-router-dom"; // <-- Impor useNavigate
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 // @mui material components
-import Grid from "@mui/material/Grid";
+import Grid from "@mui/material/Grid"; // Keep Grid if you intend to use it for layout
+import Typography from "@mui/material/Typography"; // Import Typography for text
 
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
@@ -25,22 +26,22 @@ import MDBox from "components/MDBox";
 // Material Dashboard 2 React example components
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
-import Footer from "examples/Footer";
-import ReportsBarChart from "examples/Charts/BarCharts/ReportsBarChart";
-import ReportsLineChart from "examples/Charts/LineCharts/ReportsLineChart";
-import ComplexStatisticsCard from "examples/Cards/StatisticsCards/ComplexStatisticsCard";
+// import Footer from "examples/Footer"; // Not in the photo, so can be removed
+// import ReportsBarChart from "examples/Charts/BarCharts/ReportsBarChart"; // Not in the photo
+// import ReportsLineChart from "examples/Charts/LineCharts/ReportsLineChart"; // Not in the photo
+// import ComplexStatisticsCard from "examples/Cards/StatisticsCards/ComplexStatisticsCard"; // Not in the photo
 
-// Data
-import reportsBarChartData from "layouts/dashboard/data/reportsBarChartData";
-import reportsLineChartData from "layouts/dashboard/data/reportsLineChartData";
+// Data (not needed for the simple photo layout)
+// import reportsBarChartData from "layouts/dashboard/data/reportsBarChartData";
+// import reportsLineChartData from "layouts/dashboard/data/reportsLineChartData";
 
-// Dashboard components
-import Projects from "layouts/dashboard/components/Projects";
-import OrdersOverview from "layouts/dashboard/components/OrdersOverview";
+// Dashboard components (not needed for the simple photo layout)
+// import Projects from "layouts/dashboard/components/Projects";
+// import OrdersOverview from "layouts/dashboard/components/OrdersOverview";
 
 function Dashboard() {
-  const { sales, tasks } = reportsLineChartData;
-  const navigate = useNavigate(); // <-- Inisialisasi useNavigate
+  // const { sales, tasks } = reportsLineChartData; // Not needed
+  const navigate = useNavigate();
 
   useEffect(() => {
     // Periksa token di localStorage saat komponen dimuat
@@ -52,126 +53,24 @@ function Dashboard() {
       // Alihkan pengguna ke halaman sign-in
       navigate("/authentication/sign-in");
     }
-  }, [navigate]); // navigate ditambahkan sebagai dependency untuk useEffect
+  }, [navigate]);
+
+  const loggedInUser = localStorage.getItem("nama") || "your"; // Assuming you store username in localStorage
 
   return (
     <DashboardLayout>
       <DashboardNavbar />
-      <MDBox py={3}>
-        <Grid container spacing={3}>
-          <Grid item xs={12} md={6} lg={3}>
-            <MDBox mb={1.5}>
-              <ComplexStatisticsCard
-                color="dark"
-                icon="weekend"
-                title="Bookings"
-                count={281}
-                percentage={{
-                  color: "success",
-                  amount: "+55%",
-                  label: "than lask week",
-                }}
-              />
-            </MDBox>
-          </Grid>
-          <Grid item xs={12} md={6} lg={3}>
-            <MDBox mb={1.5}>
-              <ComplexStatisticsCard
-                icon="leaderboard"
-                title="Today's Users"
-                count="2,300"
-                percentage={{
-                  color: "success",
-                  amount: "+3%",
-                  label: "than last month",
-                }}
-              />
-            </MDBox>
-          </Grid>
-          <Grid item xs={12} md={6} lg={3}>
-            <MDBox mb={1.5}>
-              <ComplexStatisticsCard
-                color="success"
-                icon="store"
-                title="Revenue"
-                count="34k"
-                percentage={{
-                  color: "success",
-                  amount: "+1%",
-                  label: "than yesterday",
-                }}
-              />
-            </MDBox>
-          </Grid>
-          <Grid item xs={12} md={6} lg={3}>
-            <MDBox mb={1.5}>
-              <ComplexStatisticsCard
-                color="primary"
-                icon="person_add"
-                title="Followers"
-                count="+91"
-                percentage={{
-                  color: "success",
-                  amount: "",
-                  label: "Just updated",
-                }}
-              />
-            </MDBox>
-          </Grid>
-        </Grid>
-        <MDBox mt={4.5}>
-          <Grid container spacing={3}>
-            <Grid item xs={12} md={6} lg={4}>
-              <MDBox mb={3}>
-                <ReportsBarChart
-                  color="info"
-                  title="website views"
-                  description="Last Campaign Performance"
-                  date="campaign sent 2 days ago"
-                  chart={reportsBarChartData}
-                />
-              </MDBox>
-            </Grid>
-            <Grid item xs={12} md={6} lg={4}>
-              <MDBox mb={3}>
-                <ReportsLineChart
-                  color="success"
-                  title="daily sales"
-                  description={
-                    <>
-                      (<strong>+15%</strong>) increase in today sales.
-                    </>
-                  }
-                  date="updated 4 min ago"
-                  chart={sales}
-                />
-              </MDBox>
-            </Grid>
-            <Grid item xs={12} md={6} lg={4}>
-              <MDBox mb={3}>
-                <ReportsLineChart
-                  color="dark"
-                  title="completed tasks"
-                  description="Last Campaign Performance"
-                  date="just updated"
-                  chart={tasks}
-                />
-              </MDBox>
-            </Grid>
-          </Grid>
-        </MDBox>
-        <MDBox>
-          <Grid container spacing={3}>
-            <Grid item xs={12} md={6} lg={8}>
-              <Projects />
-            </Grid>
-            <Grid item xs={12} md={6} lg={4}>
-              <OrdersOverview />
-            </Grid>
-          </Grid>
-        </MDBox>
+      <MDBox py={3} sx={{ textAlign: "center", mt: "10%" }}>
+        {" "}
+        {/* Add margin-top for vertical centering */}
+        <Typography variant="h3" fontWeight="medium" color="text">
+          CMS Panel
+        </Typography>
+        <Typography variant="body1" color="text" sx={{ mt: 1 }}>
+          You are logged in to <span style={{ fontWeight: "bold" }}>{loggedInUser}</span> account!
+        </Typography>
       </MDBox>
-      <Footer />
+      {/* <Footer /> */} {/* Remove Footer if it's not desired in this simplified view */}
     </DashboardLayout>
   );
 }
