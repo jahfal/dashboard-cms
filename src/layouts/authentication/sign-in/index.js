@@ -1,5 +1,5 @@
 // src/config/api.js
-import { API_BASE_URL } from "dashboard-cms/src/config/api";
+import { API_BASE_URL } from "../../../config/api";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 // ... import komponen Material UI lainnya ...

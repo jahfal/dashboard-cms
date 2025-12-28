@@ -1,7 +1,7 @@
 // src/layouts/product/components/NewProductForm.js
 
 import { useState } from "react";
-import { API_BASE_URL } from "dashboard-cms/src/config/api";
+import { API_BASE_URL } from "../../../config/api";
 
 import PropTypes from "prop-types"; // Tambahkan baris ini jika belum ada
 

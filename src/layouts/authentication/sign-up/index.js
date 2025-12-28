@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { API_BASE_URL } from "dashboard-cms/src/config/api";
+import { API_BASE_URL } from "../../../config/api";
 
 // react-router-dom components
 import { Link, useNavigate } from "react-router-dom";
