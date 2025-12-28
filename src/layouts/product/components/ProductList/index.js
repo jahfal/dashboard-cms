@@ -1,5 +1,5 @@
 // src/layouts/product/components/ProductList/index.js
-import { API_BASE_URL } from "../../../config/api";
+import { API_BASE_URL } from "../../../../config/api";
 import { useState, useEffect } from "react";
 import Card from "@mui/material/Card";
 import Grid from "@mui/material/Grid";

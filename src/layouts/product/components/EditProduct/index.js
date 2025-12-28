@@ -1,5 +1,5 @@
 // src/layouts/product/components/EditProductForm.js
-import { API_BASE_URL } from "../../../config/api";
+import { API_BASE_URL } from "../../../../config/api";
 import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 
