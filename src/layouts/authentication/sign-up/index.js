@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { API_BASE_URL } from "dashboard-cms/src/config/api";
 
 // react-router-dom components
 import { Link, useNavigate } from "react-router-dom";
@@ -95,7 +96,7 @@ function Cover() {
     // --- Akhir Validasi ---
 
     try {
-      const response = await fetch("http://localhost:3000/api/auth/register", {
+      const response = await fetch(`${API_BASE_URL}/auth/register`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

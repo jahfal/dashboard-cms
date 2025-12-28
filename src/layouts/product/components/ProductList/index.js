@@ -1,5 +1,5 @@
 // src/layouts/product/components/ProductList/index.js
-
+import { API_BASE_URL } from "dashboard-cms/src/config/api";
 import { useState, useEffect } from "react";
 import Card from "@mui/material/Card";
 import Grid from "@mui/material/Grid";
@@ -54,7 +54,7 @@ function ProductList() {
         return;
       }
 
-      const response = await fetch("http://localhost:3000/api/product", {
+      const response = await fetch(`${API_BASE_URL}/product`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -124,7 +124,7 @@ function ProductList() {
 
     try {
       const token = localStorage.getItem("authToken");
-      const response = await fetch(`http://localhost:3000/api/product/${productId}`, {
+      const response = await fetch(`${API_BASE_URL}/product/${productId}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,

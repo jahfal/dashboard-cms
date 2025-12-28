@@ -1,3 +1,5 @@
+// src/config/api.js
+import { API_BASE_URL } from "dashboard-cms/src/config/api";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 // ... import komponen Material UI lainnya ...
@@ -67,7 +69,7 @@ function Basic() {
     setError(null);
 
     try {
-      const response = await fetch("http://localhost:3000/api/auth/login", {
+      const response = await fetch(`${API_BASE_URL}/auth/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

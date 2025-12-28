@@ -1,6 +1,7 @@
 // src/layouts/product/components/NewProductForm.js
 
 import { useState } from "react";
+import { API_BASE_URL } from "dashboard-cms/src/config/api";
 
 import PropTypes from "prop-types"; // Tambahkan baris ini jika belum ada
 
@@ -112,7 +113,7 @@ function NewProductForm({ onBack, onSave }) {
       const formData = new FormData();
       formData.append("productImage", selectedFile); // 'productImage' harus sesuai dengan nama field di multer
 
-      const uploadResponse = await fetch("http://localhost:3000/api/upload", {
+      const uploadResponse = await fetch(`${API_BASE_URL}/upload`, {
         method: "POST",
         headers: {
           // Penting: Jangan set Content-Type header saat menggunakan FormData
@@ -144,7 +145,7 @@ function NewProductForm({ onBack, onSave }) {
 
       console.log("Saving new product:", productData);
 
-      const response = await fetch("http://localhost:3000/api/product", {
+      const response = await fetch(`${API_BASE_URL}/product`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

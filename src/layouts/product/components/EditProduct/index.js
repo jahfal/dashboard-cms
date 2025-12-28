@@ -1,5 +1,5 @@
 // src/layouts/product/components/EditProductForm.js
-
+import { API_BASE_URL } from "dashboard-cms/src/config/api";
 import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 
@@ -121,7 +121,7 @@ function EditProductForm({ productData, onBack, onUpdate }) {
         const formData = new FormData();
         formData.append("productImage", selectedFile);
 
-        const uploadResponse = await fetch("http://localhost:3000/api/upload", {
+        const uploadResponse = await fetch(`${API_BASE_URL}/upload`, {
           method: "POST",
           headers: {
             Authorization: `Bearer ${localStorage.getItem("authToken")}`,
@@ -152,7 +152,7 @@ function EditProductForm({ productData, onBack, onUpdate }) {
       console.log("Final Image URL yang akan dikirim ke backend:", finalImageUrl);
       console.log("Updated Product Data yang akan dikirim:", updatedProductData);
 
-      const response = await fetch(`http://localhost:3000/api/product/${idProduct}`, {
+      const response = await fetch(`${API_BASE_URL}/product/${idProduct}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
