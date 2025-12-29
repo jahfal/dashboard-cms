@@ -5,7 +5,11 @@ WORKDIR /app
 
 # Copy package.json and install dependencies
 COPY package*.json ./
-RUN npm install
+
+# MODIFIKASI DISINI: Tambahkan timeout dan legacy-peer-deps
+RUN npm config set fetch-retry-maxtimeout 600000 && \
+    npm config set fetch-retries 5 && \
+    npm install --legacy-peer-deps
 
 # Copy the rest of the application code
 COPY . .
@@ -20,7 +24,11 @@ WORKDIR /app
 
 # Copy package.json and install production-only dependencies
 COPY package*.json ./
-RUN npm install --omit=dev
+
+# MODIFIKASI DISINI: Tambahkan legacy-peer-deps juga agar tidak error saat install serve
+RUN npm config set fetch-retry-maxtimeout 600000 && \
+    npm config set fetch-retries 5 && \
+    RUN npm install --omit=dev --legacy-peer-deps
 
 # Corrected: Copy the 'build' folder instead of '.next'
 COPY --from=builder /app/build ./build
@@ -30,7 +38,6 @@ COPY --from=builder /app/public ./public
 EXPOSE 3002
 
 # Define the command to start the production server
-# You'll need to use a static server like 'serve' to run this build
-# The first command installs 'serve', the second one actually runs it
-RUN npm install -g serve
+# Gunakan --legacy-peer-deps juga saat install global package jika perlu
+RUN npm install -g serve --legacy-peer-deps
 CMD ["serve", "-s", "build", "-l", "3002"]
