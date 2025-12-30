@@ -38,7 +38,7 @@ RUN npm config set registry https://registry.npmmirror.com && \
 COPY --from=builder /app/build ./build
 COPY --from=builder /app/public ./public
 
-RUN find build -type f -exec sed -i 's|http://192.168.1.53:3000|https://ever-ease-mixture-app.trycloudflare.com|g' {} +
+RUN find build -type f -exec sed -i 's|http://localhost:3000/api|https://ever-ease-mixture-app.trycloudflare.com|g' {} +
 
 # Expose the port the CMS runs on
 EXPOSE 3002
