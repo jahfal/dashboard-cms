@@ -10,8 +10,8 @@ COPY package*.json ./
 # Tambahkan timeout, retries, dan mirror agar download lebih stabil
 RUN npm config set registry https://registry.npmmirror.com && \
     npm config set fetch-retry-maxtimeout 60000000 && \
-    npm config set fetch-retries 5 && \
-    npm install --legacy-peer-deps
+    npm config set fetch-retries 10 && \
+    npm install --legacy-peer-deps --no-audit --no-fund
 
 # Copy the rest of the application code
 COPY . .
@@ -31,8 +31,8 @@ COPY package*.json ./
 # Tetap gunakan legacy-peer-deps agar instalasi dependencies inti tidak konflik
 RUN npm config set registry https://registry.npmmirror.com && \
     npm config set fetch-retry-maxtimeout 60000000 && \
-    npm config set fetch-retries 5 && \
-    npm install --omit=dev --legacy-peer-deps
+    npm config set fetch-retries 10 && \
+    npm install --omit=dev --legacy-peer-deps --no-audit
 
 # Copy the 'build' folder dari builder stage
 COPY --from=builder /app/build ./build
