@@ -30,7 +30,7 @@ COPY --from=builder /app/build ./build
 COPY --from=builder /app/public ./public
 
 # AKTIFKAN LAGI INI (Hapus tanda #) agar API jalan di Cloudflare
-RUN find build -type f -exec sed -i 's|http://localhost:3000/api|https://ever-ease-mixture-app.trycloudflare.com|g' {} +
+# RUN find build -type f -exec sed -i 's|http://localhost:3000/api|https://ever-ease-mixture-app.trycloudflare.com|g' {} +
 
 EXPOSE 3002
 
