@@ -3,40 +3,35 @@ FROM node:18-alpine AS builder
 
 WORKDIR /app
 
-# 1. Copy package files
+# Ambil package files
 COPY package*.json ./
 
-# 2. Copy SEMUA file termasuk node_modules hasil SCP dari Mac
-# Pastikan .dockerignore tidak mengecualikan node_modules!
+# Masukkan node_modules 233MB dan kodingan
 COPY . .
 
-# 3. PERBAIKI link binary yang rusak akibat beda OS (Mac ke Linux)
-# Perintah ini jauh lebih cepat daripada 'npm install' penuh.
-RUN npm rebuild
+# Perbaiki binary link (Sangat Cepat) & Build kodingan
+RUN npm rebuild && npm run build
 
-# 4. Jalankan build (menggunakan node_modules yang sudah diperbaiki)
-RUN npm run build
+# --- TAMBAHAN: Install serve di sini agar aman ---
+RUN npm install -g serve --registry=https://registry.npmmirror.com
 
 
-# Stage 2: Create a production-ready image
+# Stage 2: Production Image
 FROM node:18-alpine
 
 WORKDIR /app
 
-# 5. Install 'serve' untuk menjalankan folder build
-# Menggunakan mirror agar tidak timeout di internet Acer (0.73 Mbps)
-RUN npm config set registry https://registry.npmmirror.com && \
-    npm install -g serve
+# Ambil 'serve' yang sudah diinstall di Stage 1
+COPY --from=builder /usr/local/bin/serve /usr/local/bin/serve
+COPY --from=builder /usr/local/lib/node_modules /usr/local/lib/node_modules
 
-# 6. Ambil hasil build dari Stage 1
+# Ambil hasil build
 COPY --from=builder /app/build ./build
 COPY --from=builder /app/public ./public
 
-# 7. Update URL API agar menunjuk ke Cloudflare Tunnel Anda
-# RUN find build -type f -exec sed -i 's|http://localhost:3000/api|https://ever-ease-mixture-app.trycloudflare.com|g' {} +
+# AKTIFKAN LAGI INI (Hapus tanda #) agar API jalan di Cloudflare
+RUN find build -type f -exec sed -i 's|http://localhost:3000/api|https://ever-ease-mixture-app.trycloudflare.com|g' {} +
 
-# Expose port CMS
 EXPOSE 3002
 
-# Jalankan aplikasi menggunakan 'serve'
 CMD ["serve", "-s", "build", "-l", "3002"]
